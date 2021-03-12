@@ -1,0 +1,719 @@
+const express = require('express');
+const bodyParser = require('body-parser');
+const mysql      = require('mysql');
+
+const connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'shital',
+  password : 'shital@123',
+  database : 'capgemini',
+  insecureAuth : true
+});
+// Initialize the app
+const app = express();
+
+app.get('/records', function (req, res) {
+    connection.connect();
+    connection.query('select * from employees', function (error, results, fields) {
+      if (error) throw error;
+      res.send(results)
+    });
+    connection.end();
+});
+// Start the server
+app.listen(2000, () => {
+ console.log('Go to http://localhost:2000/records to see posts');
+});
+
+
+
+
+
+const express=require('express')
+const bodyParser = require('body-parser')
+const mysql = require('mysql')
+
+const connection=mysql.createConnection({
+    host:'localhost',
+    user:'shital',
+    password:'shital@123',
+    database:'techm'
+})
+
+const app=express();
+app.get('/records',function(req,res){
+    connection.connect();
+    connection.query("select * from employee",function(errors,result,fields){
+        if(errors) throw errors
+        console.log(result)
+    })
+    connection.end();
+})
+
+app.listen(2000,()=>{
+    console.log("Server started at 2000 port")
+})
+
+
+
+
+
+
+
+const faker = require('faker')
+const fs = require('fs')
+
+function generateUsers() {
+
+    let users = []
+
+    for (let id=1; id <= 100; id++) {
+
+        let firstName = faker.name.firstName()
+        let lastName = faker.name.lastName()
+        let email = faker.internet.email()
+
+        users.push({
+            "id": id,
+            "first_name": firstName,
+            "last_name": lastName,
+            "email": email
+        })
+    }
+
+    return { "users": users }
+}
+
+let dataObj = generateUsers();
+
+fs.writeFileSync('data.json', JSON.stringify(dataObj, null, '\t'));
+
+
+
+
+
+1] npm install -g json-server
+2] npm install -g faker
+3] npm install -g fs
+
+
+
+
+
+
+
+
+
+1] npm install -g express-generator
+2] express my-app
+
+
+
+
+
+
+
+1] npm install -g create-react-app
+
+2] npx create-react-app my-app
+
+3] cd my-app
+
+4] npm install
+
+5] npm start
+
+
+
+
+
+
+1] npm install -g yo
+2] npm install -g generator-react-webpack
+3] mkdir my-app && cd my-app
+4] yo react-webpack
+5] TO GENERATE NEW COMPONENT
+   :- yo react-webpack:component my/namespaced/components/new
+
+6] Stateless component
+	yo react-webpack:component my/namespaced/components/new --stateless
+7] npm start
+8] npm run serve
+
+
+
+
+
+
+
+
+1] git init
+2] heroku create -b https://github.com/mars/create-react-app-buildpack.git
+3] git add . 
+4] git commit -m "react-router-app" 
+5] git push heroku master 
+6] heroku open 
+
+
+
+
+
+
+https://shielded-wave-04479.herokuapp.com/
+    
+    
+    
+    
+
+
+1] npm install -g create-react-app
+
+2] npx create-react-app my-app
+
+3] cd my-app
+
+4] npm install
+
+5] npm start
+
+
+
+
+
+
+
+import React,{Component} from 'react';
+import { Route, Router,hashHistory,Link,IndexRoute } from 'react-router';
+class App2 extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            persons:[{name:'anish'}]
+        };
+    }
+    render () {
+      return (
+        <Router history={hashHistory}>
+          <Route path='/' component={Container}>
+            <IndexRoute component={Home} />
+            {/* <Route path='/address' component={Address} /> */}
+            <Route path='/address' component={Address}>
+                <IndexRoute component={PerAddress}/>
+                <Route path='tempadd' component={TempAdderss} />
+            </Route>
+            <Route path='/users(/:name)' component={() => <Users data={this.state} />}></Route>
+            <Route path='*' component={NotFound} />
+          </Route>
+        </Router>
+      )
+    }
+  }
+
+  const Users = ({ data }) => {
+    return (
+      <h3>{JSON.stringify(data.persons)}</h3>
+    );
+  };
+  
+const PerAddress=()=>(<div>Pune wakad</div>)
+const TempAdderss=()=><div>Mumbai Bandra</div>
+
+const Nav = () => (
+    <div>
+      <Link onlyActiveOnIndex activeStyle={{color:'#53acff'}} to='/'>Home</Link>&nbsp;
+      <Link activeStyle={{color:'#53acff'}} to='/address'>Address</Link>
+      <Link activeStyle={{color:'#53acff'}} to='/users'>Users</Link>
+    </div>
+  )
+
+const Container = (props) => <div>
+
+  <Nav />
+  {props.children}
+</div>
+
+const Home=()=> <h1>Home Component</h1>
+// const Address=()=> <h1>Address Component</h1>
+
+const Address=(props)=><div>
+    <br/>
+    <Link onlyActiveOnIndex activeStyle={{color:'#53acff'}} to='/address'>Permanent Address </Link> &nbsp; &nbsp;
+    <Link activeStyle={{color:'#53acff'}} to='/address/tempadd'>Temporary Address</Link>
+    {props.children}
+</div>
+
+const NotFound=()=> <h1>404 Not Found</h1>
+export default App2;
+
+
+
+
+
+
+
+
+
+
+  const Users = ({ data }) => {
+    return (
+      <h3>{data.data}</h3>
+    );
+  };
+
+
+
+
+
+       <Route path='/users(/:name)' component={() => <Users data={this.state} />}></Route>
+    
+    
+    
+
+
+
+https://levelup.gitconnected.com/how-to-pass-additional-data-while-redirecting-to-different-route-f7bf5f95d48c
+
+
+
+import React,{Component} from 'react';
+import { Route, Router,hashHistory,Link,IndexRoute } from 'react-router';
+class App2 extends Component {
+    render () {
+      return (
+        <Router history={hashHistory}>
+          <Route path='/' component={Container}>
+            <IndexRoute component={Home} />
+            {/* <Route path='/address' component={Address} /> */}
+            <Route path='/address' component={Address}>
+                <IndexRoute component={PerAddress}/>
+                <Route path='tempadd' component={TempAdderss} />
+            </Route>
+            <Route path='/users(/:name)' component={Users}></Route>
+            <Route path='*' component={NotFound} />
+          </Route>
+        </Router>
+      )
+    }
+  }
+  
+const Users=(props)=><div>
+    <h1>Users Component</h1>
+    <h1>{props.params.name}</h1>
+</div>
+
+const PerAddress=()=>(<div>Pune wakad</div>)
+const TempAdderss=()=><div>Mumbai Bandra</div>
+
+const Nav = () => (
+    <div>
+      <Link onlyActiveOnIndex activeStyle={{color:'#53acff'}} to='/'>Home</Link>&nbsp;
+      <Link activeStyle={{color:'#53acff'}} to='/address'>Address</Link>
+      <Link activeStyle={{color:'#53acff'}} to='/users'>Users</Link>
+    </div>
+  )
+
+const Container = (props) => <div>
+
+  <Nav />
+  {props.children}
+</div>
+
+const Home=()=> <h1>Home Component</h1>
+// const Address=()=> <h1>Address Component</h1>
+
+const Address=(props)=><div>
+    <br/>
+    <Link onlyActiveOnIndex activeStyle={{color:'#53acff'}} to='/address'>Permanent Address </Link> &nbsp; &nbsp;
+    <Link activeStyle={{color:'#53acff'}} to='/address/tempadd'>Temporary Address</Link>
+    {props.children}
+</div>
+
+const NotFound=()=> <h1>404 Not Found</h1>
+export default App2;
+
+
+
+
+
+
+
+
+
+import React,{Component} from 'react';
+import { Route, Router,hashHistory,Link,IndexRoute } from 'react-router';
+class App2 extends Component {
+    render () {
+      return (
+        <Router history={hashHistory}>
+          <Route path='/' component={Container}>
+            <IndexRoute component={Home} />
+            {/* <Route path='/address' component={Address} /> */}
+            <Route path='/address' component={Address}>
+                <IndexRoute component={PerAddress}/>
+                <Route path='tempadd' component={TempAdderss} />
+            </Route>
+            <Route path='*' component={NotFound} />
+          </Route>
+        </Router>
+      )
+    }
+  }
+  
+const PerAddress=()=>(<div>Pune wakad</div>)
+const TempAdderss=()=><div>Mumbai Bandra</div>
+
+const Nav = () => (
+    <div>
+      <Link to='/'>Home</Link>&nbsp;
+      <Link to='/address'>Address</Link>
+    </div>
+  )
+
+
+const Container = (props) => <div>
+
+  <Nav />
+  {props.children}
+</div>
+
+const Home=()=> <h1>Home Component</h1>
+// const Address=()=> <h1>Address Component</h1>
+
+const Address=(props)=><div>
+    <br/>
+    <Link to='/address'>Permanent Address </Link> &nbsp; &nbsp;
+    <Link to='/address/tempadd'>Temporary Address</Link>
+    {props.children}
+
+</div>
+
+const NotFound=()=> <h1>404 Not Found</h1>
+export default App2;
+
+
+
+
+
+import React,{Component} from 'react';
+import { Route, Router,hashHistory,Link,IndexRoute } from 'react-router';
+class App2 extends Component {
+    render () {
+      return (
+        <Router history={hashHistory}>
+          <Route path='/' component={Container}>
+            <IndexRoute component={Home} />
+            <Route path='/address' component={Address} />
+            <Route path='*' component={NotFound} />
+          </Route>
+        </Router>
+      )
+    }
+  }
+  
+const Nav = () => (
+    <div>
+      <Link to='/'>Home</Link>&nbsp;
+      <Link to='/address'>Address</Link>
+    </div>
+  )
+
+
+const Container = (props) => <div>
+  <Nav />
+  {props.children}
+</div>
+
+
+
+
+const Home=()=> <h1>Home Component</h1>
+const Address=()=> <h1>Address Component</h1>
+const NotFound=()=> <h1>404 Not Found</h1>
+export default App2;
+
+
+
+
+
+
+
+
+
+
+import React from 'react';
+import { Route, Router,hashHistory } from 'react-router';
+
+class App2 extends React.Component {
+    render() {
+        return (
+            <Router history={hashHistory}>
+                <Route path='/' component={Home}></Route>
+                <Route path='/address' component={Address}></Route>
+
+            </Router>
+        )
+    }
+}
+
+const Home=()=> <h1>Home Component</h1>
+const Address=()=> <h1>Address Component</h1>
+
+export default App2;
+
+
+
+
+
+
+
+
+"react-router": "^3.0.5"
+        
+        
+        
+        
+        
+
+
+import React from "react";
+import { Link, Route, useRouteMatch } from "react-router-dom";
+import Product from "./Product.jsx";
+
+const productData = [{
+  id: 1,
+  name: "NIKE Liteforce Blue Sneakers",
+  description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin molestie.",
+  status: "Available",
+},
+{
+  id: 2,
+  name: "Stylised Flip Flops and Slippers",
+  description: "Mauris finibus, massa eu tempor volutpat, magna dolor euismod dolor.",
+  status: "Out of Stock",
+},
+{
+  id: 3,
+  name: "ADIDAS Adispree Running Shoes",
+  description: "Maecenas condimentum porttitor auctor. Maecenas viverra fringilla felis, eu pretium.",
+  status: "Available",
+},
+{
+  id: 4,
+  name: "ADIDAS Mid Sneakers",
+  description: "Ut hendrerit venenatis lacus, vel lacinia ipsum fermentum vel. Cras.",
+  status: "Out of Stock",
+},
+];
+
+
+const Products = ({ match }) => {
+  // const productData =productData;
+  const { url } = useRouteMatch();
+
+  /* Create an array of `<li>` items for each product */
+  const linkList = productData.map((product) => {
+    return (
+      <li key={product.id}>
+        <Link to={`${url}/${product.id}`}>{product.name}</Link>
+      </li>
+    );
+  });
+
+  return (
+    <div>
+      <div>
+        <div>
+          <h3>Products</h3>
+          <ul>{linkList}</ul>
+        </div>
+      </div>
+
+      <Route path={`${url}/:productId`}>
+        <Product data={productData} />
+      </Route>
+      <Route exact path={url}>
+        <p>Please select a product.</p>
+      </Route>
+    </div>
+  );
+};
+
+export default Products;
+
+
+
+
+
+https://codesandbox.io/s/react-router-demo-final-forked-r59jg?from-embed=&file=/src/Login.js
+    
+    
+    
+    
+
+
+import React from 'react';
+import  {BrowserRouter as Router,Link,Route,Switch} from 'react-router-dom';
+import Home from './Components/Home.jsx'
+import About from './Components/About.jsx'
+import Contact from './Components/Contact.jsx'
+import Topics from './Components/Topics.jsx'
+class App extends React.Component {
+    render() {
+        return(
+            <Router>
+                <div>
+                    <h2>React Router Example</h2>
+                    <nav>
+                        <ul>
+                            <li><Link to={"/"}>HOME</Link></li>
+                            <li><Link to={"/about"}>About</Link></li>
+                            <li><Link to={"/topics"}>Topics</Link></li>
+                            <li><Link to={"/contact"}>Contact</Link></li>
+                        </ul>
+                    </nav>
+                    <hr/>
+                    <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/about" component={About} />
+                            <Route exact path="/topics" component={Topics} />
+                            <Route exact path="/contact" component={Contact} />
+                    </Switch>
+                </div>
+            </Router>
+          )
+    }
+
+}
+
+export default App;
+
+
+
+
+
+
+
+{
+    "name": "myreactapp",
+    "version": "1.0.0",
+    "description": "this is a sample app for react training",
+    "main": "index.js",
+    "scripts": {
+        "start": "webpack-dev-server"
+    },
+    "author": "PM",
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-loader": "^7.1.5",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-react": "^6.24.1",
+        "css-loader": "^3.2.0",
+        "html-loader": "^1.3.2",
+        "html-webpack-plugin": "^3.2.0",
+        "react": "^16.4.1",
+        "react-dom": "^16.4.1",
+        "react-router-dom": "^5.2.0",
+        "style-loader": "^1.0.0",
+        "webpack": "^4.16.1",
+        "webpack-cli": "^3.1.0",
+        "webpack-dev-server": "^3.1.4"
+    },
+    "devDependencies": {
+        "sass-loader": "^7.2.0",
+        "node-sass": "^4.14.1"
+    }
+}
+
+
+
+
+
+
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
+
+function Topics() {
+    let match = useRouteMatch();
+  
+    return (
+      <div>
+        <h2>Topics</h2>
+  
+        <ul>
+          <li>
+            <Link to={`${match.url}/components`}>Components</Link>
+          </li>
+          <li>
+            <Link to={`${match.url}/props-v-state`}>
+              Props v. State
+            </Link>
+          </li>
+        </ul>
+  
+        
+        <Switch>
+          <Route path={`${match.path}/:topicId`}>
+            <Topic />
+          </Route>
+          <Route path={match.path}>
+            <h3>Please select a topic.</h3>
+          </Route>
+        </Switch>
+      </div>
+    );
+  }
+  
+  function Topic() {
+    let { topicId } = useParams();
+    return <h3>Requested topic ID: {topicId}</h3>;
+  }
+
+  export default Topics
+    
+    
+    
+    
+    
+
+
+
+import React from 'react';
+import  {BrowserRouter as Router,Link} from 'react-router-dom';
+
+class App extends React.Component {
+    render() {
+        return(
+            <Router>
+                <div>
+                    <h2>React Router Example</h2>
+                    <nav>
+                        <ul>
+                            <li><Link to={"/"}>HOME</Link></li>
+                            <li><Link to={"/about"}>About</Link></li>
+                            <li><Link to={"/contact"}>Contact</Link></li>
+                        </ul>
+                    </nav>
+                    <hr/>
+                </div>
+            </Router>
+          )
+    }
+
+}
+
+export default App;
+
+
+
+
+npm install --save react-router-dom
